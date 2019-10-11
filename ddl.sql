@@ -1,0 +1,16 @@
+CREATE DATABASE
+IF NOT EXISTS todolist;
+USE todolist;
+CREATE TABLE
+IF NOT EXISTS item
+(
+id INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+name VARCHAR
+(200) NOT NULL COMMENT '해야할 일',
+complete_flag TINYINT NOT NULL COMMENT '할일 수행여부 완료:1 완료X:0',
+create_date DATETIME NOT NULL COMMENT '등록일',
+modify_date DATETIME NOT NULL COMMENT '수정일',
+delete_flag TINYINT NOT NULL DEFAULT 0 COMMENT '삭제유무 삭제:1, 삭제안됨:0',
+PRIMARY KEY
+(id))
+ENGINE=InnoDB DEFAULT CHARSET=utf8;

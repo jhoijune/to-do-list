@@ -1,0 +1,61 @@
+{
+  "name": "to-do-list",
+  "version": "1.0.0",
+  "description": "react로 제작한 to do list입니다",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack -w",
+    "start": "node -r esm app.js",
+    "dev": "nodemon app.js --exec babel-node --presets babel-preset-env"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhoijune/to-do-list.git"
+  },
+  "author": "jhoijune",
+  "license": "ISC",
+  "babel": {
+    "presets": [
+      "react",
+      "es2015"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/jhoijune/to-do-list/issues"
+  },
+  "homepage": "https://github.com/jhoijune/to-do-list#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-node": "0.0.1-security",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "esm": "^3.2.25",
+    "nodemon": "^1.19.3",
+    "prettier": "^1.18.2",
+    "react-hot-loader": "^4.12.14",
+    "webpack": "^4.41.0"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.7.0",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-router": "^5.1.2",
+    "sequelize": "^5.19.1"
+  }
+}
