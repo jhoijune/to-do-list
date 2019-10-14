@@ -1,4 +1,4 @@
-import path from 'path';
+const path = require('path');
 
 module.exports = {
   entry: './jsx/app.jsx',
@@ -12,12 +12,19 @@ module.exports = {
     reasons: true,
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
+        include: [path.join(__dirname, 'jsx')],
         exclude: /(node_modules)/,
-        loaders: ['babel-loader'],
+        use: {
+          loader: 'babel-loader',
+        },
       },
     ],
+  },
+  mode: 'development',
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
 };

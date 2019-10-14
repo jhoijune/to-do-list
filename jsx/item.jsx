@@ -5,7 +5,7 @@ import React from 'react';
 const Item = props => {
   const {
     changeable,
-    deleteable,
+    deletable,
     itemId,
     name,
     isCompleted,
@@ -33,23 +33,21 @@ const Item = props => {
               value={name}
               onChange={handleChange(itemId)}
               onBlur={handleOnBlur(itemId)}
-              onKeyUp={handleEnter(itemId)}
+              onKeyPress={handleEnter(itemId)}
             />
           );
         }
         return (
-          <div>
-            <p
-              onMouseOver={handleMouseOver(itemId)}
-              onMouseOut={handleMouseOut}
-              onDoubleClick={handleDoubleClick(itemId)}
-            >
-              {name}
-            </p>
+          <div
+            onMouseOver={handleMouseOver(itemId)}
+            onMouseOut={handleMouseOut}
+          >
+            <p onDoubleClick={handleDoubleClick(itemId)}>{name}</p>
             <button
               type="button"
               onClick={handleDelete(itemId)}
-              style={{ display: deleteable ? 'none' : 'inline-block' }}
+              className={deletable ? 'inline-block' : 'none'}
+              style={{ display: deletable ? 'inline-block' : 'none' }}
             >
               X
             </button>

@@ -1,16 +1,18 @@
-import React, { useState, Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router ,Route,Link, browserHistory} from 'react-router';
+import { Router, Route, withRouter } from 'react-router';
+import { createBrowserHistory } from 'history';
 
+import ItemList from './item-list';
 
+const browserHistory = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={browserHistory}>
-    <Route path="/" component={Header}>
-      <Route path="/all" component={}/>
-      <Route path="/active" component={}/>
-      <Route path="/completed" component={}/>
-    </Route>
+    <Route exact path="/" component={withRouter(ItemList)} />
+    <Route exact path="/all" component={withRouter(ItemList)} />
+    <Route exact path="/active" component={withRouter(ItemList)} />
+    <Route exact path="/completed" component={withRouter(ItemList)} />
   </Router>,
   document.getElementById('content'),
 );

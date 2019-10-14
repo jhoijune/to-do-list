@@ -29,8 +29,6 @@ class ItemList extends Component {
   }
 
   componentDidMount() {
-    // location 변경 감지 이벤트 리스너
-    window.addEventListener('hashchange', event => {});
     // 등록 요청
     axios.get('/api/all').then(({ data }) => {
       const { items, size: itemCount } = data;
@@ -45,37 +43,30 @@ class ItemList extends Component {
 
   handleHeaderClick() {
     const { activeCount, itemCount, items } = this.state;
-    const isAllCompleted = itemCount && !(itemCount - activeCount);
-    let obj;
-    if (isAllCompleted) {
-      // 모든 completed를 active로 바꿈
-      axios.put('/api/completed/all').then(({ status }) => {
+    const isAllCompleted = itemCount && !activeCount;
+    axios
+      .put(`/api/${isAllCompleted ? 'completed' : 'active'}/all`)
+      .then(({ status }) => {
         if (status === 201) {
-          obj = items.map(value => {
-            return { ...value, completeFlag: 0 };
+          const obj = items.map(value => {
+            return { ...value, completeFlag: isAllCompleted ? 0 : 1 };
+          });
+          this.setState({
+            items: obj,
+            activeCount: isAllCompleted ? itemCount : 0,
           });
         }
       });
-    } else {
-      // active를 completed로 바꿈
-      axios.put('/api/active/all').then(({ status }) => {
-        if (status === 201) {
-          obj = items.map(value => {
-            return { ...value, completeFlag: 1 };
-          });
-        }
-      });
-    }
-    this.setState({ items: obj, activeCount: isAllCompleted ? itemCount : 0 });
   }
 
   handleHeaderChange({ target }) {
     this.setState({ headerInput: target.value });
   }
 
-  handleHeaderEnter({ keyCode }) {
-    if (keyCode === 13) {
+  handleHeaderEnter({ key }) {
+    if (key === 'Enter') {
       // 할일 등록 요청
+      console.log('enter 명령을 받음');
       const { itemCount, activeCount, headerInput, items } = this.state;
       axios.post('/api/active', { name: headerInput }).then(({ data }) => {
         const modifiedData = { ...data, changeable: false, deletable: false };
@@ -233,18 +224,33 @@ class ItemList extends Component {
 
   render() {
     const { headerInput, itemCount, activeCount, items } = this.state;
+    const {
+      location: { pathname },
+    } = this.props;
+    const modifiedItems = items.filter(value => {
+      if (pathname === '/' || pathname === '/all') {
+        return true;
+      }
+      if (pathname === '/active' && value.completeFlag === 0) {
+        return true;
+      }
+      if (pathname === '/completed' && value.completeFlag === 1) {
+        return true;
+      }
+      return false;
+    });
     return (
-      <div>
+      <div className="container">
         <Header
           headerInput={headerInput}
           handleClick={this.handleHeaderClick}
           handleChange={this.handleHeaderChange}
           handleEnter={this.handleHeaderEnter}
           isClickable={itemCount}
-          isAllCompleted={itemCount && !(itemCount - activeCount)}
+          isAllCompleted={itemCount && !activeCount}
         />
         <ul>
-          {items.map(value => {
+          {modifiedItems.map(value => {
             return (
               <Item
                 key={value.itemId}
@@ -268,7 +274,7 @@ class ItemList extends Component {
         <Footer
           handleClick={this.handleFooterClick}
           left={activeCount}
-          location={this.state.location}
+          location={pathname}
           isClearable={itemCount && itemCount - activeCount}
         />
       </div>

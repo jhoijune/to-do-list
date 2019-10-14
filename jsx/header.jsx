@@ -25,7 +25,7 @@ const Header = props => {
         type="text"
         placeholder="What needs to be done"
         onChange={handleChange}
-        onKeyUp={handleEnter}
+        onKeyPress={handleEnter}
         value={headerInput}
       />
     </div>
