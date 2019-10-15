@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Header = props => {
   const {
@@ -15,12 +16,16 @@ const Header = props => {
         type="button"
         onClick={handleClick}
         style={{
-          color: isAllCompleted ? 'black' : 'grey',
           opacity: isClickable ? 1 : 0,
+          display: 'none',
         }}
-      >
-        V
-      </button>
+        id="headerButton"
+      />
+      <label
+        htmlFor="headerButton"
+        className="fas fa-chevron-down"
+        style={{ color: isAllCompleted ? 'black' : 'grey' }}
+      />
       <input
         type="text"
         placeholder="What needs to be done"
@@ -30,6 +35,16 @@ const Header = props => {
       />
     </div>
   );
+};
+
+Header.propTypes = {
+  handleClick: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleEnter: PropTypes.func.isRequired,
+  headerInput: PropTypes.string.isRequired,
+  isAllCompleted: PropTypes.oneOfType([PropTypes.number, PropTypes.bool])
+    .isRequired,
+  isClickable: PropTypes.number.isRequired,
 };
 
 export default Header;

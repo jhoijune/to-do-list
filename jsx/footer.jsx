@@ -1,34 +1,45 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Footer = props => {
   const { left, location, isClearable, handleClick } = props;
   return (
-    <div>
+    <div className="helpingSection">
       <p>{`${left} items left`}</p>
-      <a
-        href="/"
-        className={
-          location === '/all' ? 'active' : location === '/' ? 'active' : ''
+      <div className="movingSection">
+        <NavLink exact to="/">
+          All
+        </NavLink>
+        <NavLink exact to="/active">
+          Active
+        </NavLink>
+        <NavLink exact to="completed">
+          Completed
+        </NavLink>
+      </div>
+      {(det => {
+        if (det) {
+          return (
+            <button
+              type="button"
+              style={{ display: isClearable ? 'block' : 'none' }}
+              onClick={handleClick}
+            >
+              Clear completed
+            </button>
+          );
         }
-      >
-        all
-      </a>
-      <a href="/active" className={location === '/active' ? 'active' : ''}>
-        active
-      </a>
-      <a href="completed" className={location === '/completed' ? 'active' : ''}>
-        completed
-      </a>
-      <button
-        type="button"
-        style={{ display: isClearable ? 'block' : 'none' }}
-        onClick={handleClick}
-      >
-        Clear completed
-      </button>
+        return <div />;
+      })(isClearable)}
     </div>
   );
+};
+
+Footer.propTypes = {
+  left: PropTypes.number.isRequired,
+  isClearable: PropTypes.number.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default Footer;

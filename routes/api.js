@@ -169,9 +169,8 @@ router.put('/active/:itemId', async (req, res) => {
   "delete_flag": 0
 }
   */
-    let updateInfo;
     if (req.body.name) {
-      updateInfo = await Item.update(
+      await Item.update(
         {
           name: req.body.name,
           modify_date: sequelize.fn('NOW'),
@@ -181,7 +180,7 @@ router.put('/active/:itemId', async (req, res) => {
         },
       );
     } else {
-      updateInfo = await Item.update(
+      await Item.update(
         {
           complete_flag: true,
           modify_date: sequelize.fn('NOW'),
@@ -243,9 +242,8 @@ router.put('/completed/:itemId', async (req, res) => {
   "delete_flag": 0
 }
     */
-    let updateInfo;
     if (req.body.name) {
-      updateInfo = await Item.update(
+      await Item.update(
         {
           name: req.body.name,
           modify_date: sequelize.fn('NOW'),
@@ -255,7 +253,7 @@ router.put('/completed/:itemId', async (req, res) => {
         },
       );
     } else {
-      updateInfo = await Item.update(
+      await Item.update(
         {
           complete_flag: false,
           modify_date: sequelize.fn('NOW'),
@@ -297,7 +295,7 @@ router.delete('/active/:itemId', async (req, res) => {
   "delete_flag": 0
 }
 */
-    const updateInfo = await Item.update(
+    await Item.update(
       {
         delete_flag: true,
         modify_date: sequelize.fn('NOW'),
@@ -319,48 +317,7 @@ router.delete('/active/:itemId', async (req, res) => {
         id: req.params.itemId,
       },
     });
-    res.send(result);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-router.delete('/completed/:itemId', async (req, res) => {
-  try {
-    /*
-    return:
-{
-  "itemId": 0,
-  "name": "string",
-  "class": 0,
-  "create_date": "2019~"
-  "modify_date": "2019~"
-  "delete_flag": 0
-}
-*/
-    const updateInfo = await Item.update(
-      {
-        delete_flag: true,
-        modify_date: sequelize.fn('NOW'),
-      },
-      {
-        where: { id: req.params.itemId },
-      },
-    );
-    const result = await Item.findOne({
-      attributes: [
-        ['id', 'itemId'],
-        'name',
-        ['complete_flag', 'completeFlag'],
-        ['create_date', 'createDate'],
-        ['modify_date', 'modifyDate'],
-        ['delete_flag', 'deleteFlag'],
-      ],
-      where: {
-        id: req.params.itemId,
-      },
-    });
-    res.send(result);
+    res.status(201).send(result);
   } catch (err) {
     console.error(err);
   }
@@ -368,7 +325,7 @@ router.delete('/completed/:itemId', async (req, res) => {
 
 router.delete('/completed/all', async (req, res) => {
   try {
-    const updateInfo = await Item.update(
+    await Item.update(
       {
         delete_flag: true,
         modify_date: sequelize.fn('NOW'),
@@ -394,6 +351,47 @@ router.delete('/completed/all', async (req, res) => {
     res.send(result);
     */
     res.status(201).send();
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+router.delete('/completed/:itemId', async (req, res) => {
+  try {
+    /*
+    return:
+{
+  "itemId": 0,
+  "name": "string",
+  "class": 0,
+  "create_date": "2019~"
+  "modify_date": "2019~"
+  "delete_flag": 0
+}
+*/
+    await Item.update(
+      {
+        delete_flag: true,
+        modify_date: sequelize.fn('NOW'),
+      },
+      {
+        where: { id: req.params.itemId },
+      },
+    );
+    const result = await Item.findOne({
+      attributes: [
+        ['id', 'itemId'],
+        'name',
+        ['complete_flag', 'completeFlag'],
+        ['create_date', 'createDate'],
+        ['modify_date', 'modifyDate'],
+        ['delete_flag', 'deleteFlag'],
+      ],
+      where: {
+        id: req.params.itemId,
+      },
+    });
+    res.status(201).send(result);
   } catch (err) {
     console.error(err);
   }

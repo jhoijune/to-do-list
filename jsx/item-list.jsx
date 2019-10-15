@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import Item from './item';
 import Header from './header';
@@ -66,10 +67,15 @@ class ItemList extends Component {
   handleHeaderEnter({ key }) {
     if (key === 'Enter') {
       // 할일 등록 요청
-      console.log('enter 명령을 받음');
       const { itemCount, activeCount, headerInput, items } = this.state;
       axios.post('/api/active', { name: headerInput }).then(({ data }) => {
-        const modifiedData = { ...data, changeable: false, deletable: false };
+        const modifiedData = {
+          itemId: data.itemId,
+          name: data.name,
+          completeFlag: data.completeFlag,
+          changeable: false,
+          deletable: false,
+        };
         this.setState({
           items: [...items, modifiedData],
           headerInput: '',
@@ -98,11 +104,11 @@ class ItemList extends Component {
     return () => {
       // itemId에 맞는 index 찾아서 changeable을 true로
       const { items } = this.state;
-      const changedItems = items.map(value => {
+      const modifiedItems = items.map(value => {
         const changeable = value.itemId === itemId;
         return { ...value, changeable, deletable: false };
       });
-      this.setState({ items: changedItems });
+      this.setState({ items: modifiedItems });
     };
   }
 
@@ -110,29 +116,26 @@ class ItemList extends Component {
     return ({ target }) => {
       // itemId같은 것을 찾아 name을 target.value로 바꿈
       const { items } = this.state;
-      const changedItems = items.map(value => {
+      const modifiedItems = items.map(value => {
         const name = value.itemId === itemId ? target.value : value.name;
         return { ...value, name };
       });
-      this.setState({ items: changedItems });
+      this.setState({ items: modifiedItems });
     };
   }
 
   submitModifiedName(itemId) {
     const { items } = this.state;
-    let item;
-    const modifiedItems = items.map(value => {
-      if (value.itemId === itemId) {
-        item = value;
-      }
-      return { ...value, changeable: false };
-    });
+    const index = items.findIndex(value => value.itemId === itemId);
+    const item = items[index];
     axios
       .put(`/api/${item.completeFlag ? 'completed' : 'active'}/${itemId}`, {
         name: item.name,
       })
-      .then(({ state }) => {
-        if (state === 201) {
+      .then(({ status }) => {
+        if (status === 201) {
+          const modifiedItems = [...items];
+          modifiedItems[index].changeable = false;
           this.setState({
             items: modifiedItems,
           });
@@ -147,8 +150,8 @@ class ItemList extends Component {
   }
 
   handleItemEnter(itemId) {
-    return ({ keyCode }) => {
-      if (keyCode === 13) {
+    return ({ key }) => {
+      if (key === 'Enter') {
         this.submitModifiedName(itemId);
       }
     };
@@ -159,16 +162,16 @@ class ItemList extends Component {
       // itemId에 맞는 index 찾아서 completeFlag반전
       const { items, activeCount } = this.state;
       const index = items.findIndex(value => value.itemId === itemId);
-      const changedItems = [...items];
-      const isCompleted = changedItems[index].completeFlag;
-      changedItems[index].completeFlag = isCompleted ? 0 : 1;
+      const modifiedItems = [...items];
+      const isCompleted = modifiedItems[index].completeFlag;
+      modifiedItems[index].completeFlag = isCompleted ? 0 : 1;
       const requestURI = `/api/${
         isCompleted ? 'completed' : 'active'
       }/${itemId}`;
       axios.put(requestURI).then(({ status }) => {
         if (status === 201) {
           this.setState({
-            items: changedItems,
+            items: modifiedItems,
             activeCount: isCompleted ? activeCount + 1 : activeCount - 1,
           });
         }
@@ -180,18 +183,15 @@ class ItemList extends Component {
     return () => {
       // itemId에 맞는 index 찾아서 제거한 뒤 api 요청
       const { items, itemCount, activeCount } = this.state;
-      let isCompleted;
-      const modifiedItems = items.filter(value => {
-        if (value.itemId === itemId) {
-          isCompleted = value.completeFlag;
-          return false;
-        }
-        return true;
-      });
+      const index = items.findIndex(value => value.itemId === itemId);
+      const isCompleted = items[index].completeFlag;
       axios
         .delete(`/api/${isCompleted ? 'completed' : 'active'}/${itemId}`)
         .then(({ status }) => {
           if (status === 201) {
+            const modifiedItems = items.filter(
+              value => value.itemId !== itemId,
+            );
             this.setState({
               items: modifiedItems,
               itemCount: itemCount - 1,
@@ -215,12 +215,24 @@ class ItemList extends Component {
   }
 
   handleMouseOut() {
+    // O(n)
     const { items } = this.state;
     const modifiedItems = items.map(value => {
       return { ...value, deletable: false };
     });
     this.setState({ items: modifiedItems });
   }
+
+  /*
+  handleMouseOut(itemId) {
+    // O(2n)
+    const { items } = this.state;
+    const index = items.findIndex(value => value.itemId === itemId);
+    const modifiedItems = [...items];
+    modifiedItems[index].deletable = false;
+    this.setState({ items: modifiedItems });
+  }
+  */
 
   render() {
     const { headerInput, itemCount, activeCount, items } = this.state;
@@ -250,12 +262,13 @@ class ItemList extends Component {
           isAllCompleted={itemCount && !activeCount}
         />
         <ul>
-          {modifiedItems.map(value => {
+          {modifiedItems.map((value, index) => {
             return (
               <Item
                 key={value.itemId}
                 changeable={value.changeable}
                 deletable={value.deletable}
+                order={index + 1}
                 itemId={value.itemId}
                 name={value.name}
                 isCompleted={value.completeFlag}
@@ -274,12 +287,15 @@ class ItemList extends Component {
         <Footer
           handleClick={this.handleFooterClick}
           left={activeCount}
-          location={pathname}
           isClearable={itemCount && itemCount - activeCount}
         />
       </div>
     );
   }
 }
+
+ItemList.propTypes = {
+  location: PropTypes.object.isRequired,
+};
 
 export default ItemList;

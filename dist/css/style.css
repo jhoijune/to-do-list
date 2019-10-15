@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+:root {
+  --breakpoint-width: 550px;
+}
+
+body {
+  font-family: 'Apple SD Gothic Neo', sans-serif;
+  background-color: #f5f5f5;
+}
+
+h1,
+h2,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+header h1 {
+  font-family: 'Pacifico';
+  text-align: center;
+  color: #ebd6c7;
+  font-size: 16vw;
+  font-weight: 500;
+}
+
+@media (min-width: 550px) {
+  header .container {
+    width: var(--breakpoint-width);
+    margin: 0 auto;
+  }
+
+  header h1 {
+    font-size: 88px;
+  }
+}
+
+#content ul {
+  list-style: none;
+}
+
+#content ul li {
+  display: flex;
+}
+
+#content .helpingSection {
+  display: flex;
+  justify-content: space-between;
+}
+
+#content .movingSection {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#content .movingSection a {
+  display: block;
+  text-decoration: none;
+  color: #777;
+  padding: 0 10px;
+}
+
+#content .movingSection a.active {
+  border: 1px solid;
+}
+@media (min-width: 550px) {
+  #content .container {
+    width: var(--breakpoint-width);
+    margin: 0 auto;
+  }
+}
+
+footer .container {
+}
+
+@media (min-width: 550px) {
+  footer .container {
+    width: var(--breakpoint-width);
+    margin: 0 auto;
+  }
+}
