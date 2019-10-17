@@ -11,28 +11,34 @@ const Header = props => {
     isClickable,
   } = props;
   return (
-    <div>
-      <button
-        type="button"
-        onClick={handleClick}
-        style={{
-          opacity: isClickable ? 1 : 0,
-          display: 'none',
-        }}
-        id="headerButton"
-      />
-      <label
-        htmlFor="headerButton"
-        className="fas fa-chevron-down"
-        style={{ color: isAllCompleted ? 'black' : 'grey' }}
-      />
-      <input
-        type="text"
-        placeholder="What needs to be done"
-        onChange={handleChange}
-        onKeyPress={handleEnter}
-        value={headerInput}
-      />
+    <div className="heading">
+      <div className="headingLeft">
+        <button
+          type="button"
+          onClick={handleClick}
+          style={{
+            display: 'none',
+          }}
+          id="headerButton"
+        />
+        <label
+          htmlFor="headerButton"
+          className="fas fa-chevron-down"
+          style={{
+            color: isAllCompleted ? '#000' : '#e6e6e6',
+            opacity: isClickable ? 1 : 0,
+          }}
+        />
+      </div>
+      <div className="headingRight">
+        <input
+          type="text"
+          placeholder="What needs to be done"
+          onChange={handleChange}
+          onKeyPress={handleEnter}
+          value={headerInput}
+        />
+      </div>
     </div>
   );
 };

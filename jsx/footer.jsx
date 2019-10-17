@@ -6,7 +6,7 @@ const Footer = props => {
   const { left, location, isClearable, handleClick } = props;
   return (
     <div className="helpingSection">
-      <p>{`${left} items left`}</p>
+      <p>{`${left} item left`}</p>
       <div className="movingSection">
         <NavLink exact to="/">
           All
@@ -18,20 +18,21 @@ const Footer = props => {
           Completed
         </NavLink>
       </div>
-      {(det => {
-        if (det) {
-          return (
-            <button
-              type="button"
-              style={{ display: isClearable ? 'block' : 'none' }}
-              onClick={handleClick}
-            >
-              Clear completed
-            </button>
-          );
-        }
-        return <div />;
-      })(isClearable)}
+      <div className="deleteSection">
+        {(det => {
+          if (det) {
+            return (
+              <button
+                type="button"
+                style={{ display: isClearable ? 'block' : 'none' }}
+                onClick={handleClick}
+              >
+                Clear completed
+              </button>
+            );
+          }
+        })(isClearable)}
+      </div>
     </div>
   );
 };

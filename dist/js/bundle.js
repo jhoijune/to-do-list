@@ -155,7 +155,7 @@ var Footer = function Footer(props) {
       handleClick = props.handleClick;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "helpingSection"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(left, " items left")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(left, " item left")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "movingSection"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
     exact: true,
@@ -166,7 +166,9 @@ var Footer = function Footer(props) {
   }, "Active"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
     exact: true,
     to: "completed"
-  }, "Completed")), function (det) {
+  }, "Completed")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "deleteSection"
+  }, function (det) {
     if (det) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
@@ -176,9 +178,7 @@ var Footer = function Footer(props) {
         onClick: handleClick
       }, "Clear completed");
     }
-
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-  }(isClearable));
+  }(isClearable)));
 };
 
 Footer.propTypes = {
@@ -213,11 +213,14 @@ var Header = function Header(props) {
       headerInput = props.headerInput,
       isAllCompleted = props.isAllCompleted,
       isClickable = props.isClickable;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "heading"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "headingLeft"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "button",
     onClick: handleClick,
     style: {
-      opacity: isClickable ? 1 : 0,
       display: 'none'
     },
     id: "headerButton"
@@ -225,15 +228,18 @@ var Header = function Header(props) {
     htmlFor: "headerButton",
     className: "fas fa-chevron-down",
     style: {
-      color: isAllCompleted ? 'black' : 'grey'
+      color: isAllCompleted ? '#000' : '#e6e6e6',
+      opacity: isClickable ? 1 : 0
     }
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "headingRight"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "text",
     placeholder: "What needs to be done",
     onChange: handleChange,
     onKeyPress: handleEnter,
     value: headerInput
-  }));
+  })));
 };
 
 Header.propTypes = {
@@ -707,11 +713,15 @@ function (_Component) {
           handleMouseOver: _this14.handleMouseOver,
           handleMouseOut: _this14.handleMouseOut
         });
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        handleClick: this.handleFooterClick,
-        left: activeCount,
-        isClearable: itemCount && itemCount - activeCount
-      }));
+      })), function (isFooterShowing) {
+        if (isFooterShowing) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            handleClick: _this14.handleFooterClick,
+            left: activeCount,
+            isClearable: itemCount && itemCount - activeCount
+          });
+        }
+      }(itemCount));
     }
   }]);
 
@@ -756,7 +766,9 @@ var Item = function Item(props) {
       handleDelete = props.handleDelete,
       handleMouseOver = props.handleMouseOver,
       handleMouseOut = props.handleMouseOut;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "middleLeft"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "checkbox",
     id: "item".concat(order, "State"),
     onClick: handleStateChange(itemId),
@@ -766,23 +778,30 @@ var Item = function Item(props) {
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "item".concat(order, "State"),
     className: "far ".concat(isCompleted ? 'fa-check-circle' : 'fa-circle')
-  }), function (isInputable) {
+  })), function (isInputable) {
     if (isInputable) {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "middleRight"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: name,
         onChange: handleChange(itemId),
         onBlur: handleOnBlur(itemId),
-        onKeyPress: handleEnter(itemId)
-      });
+        onKeyPress: handleEnter(itemId),
+        autoFocus: true
+      }));
     }
 
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "middleRight",
       onMouseOver: handleMouseOver(itemId),
-      onMouseOut: handleMouseOut
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      onMouseOut: handleMouseOut,
       onDoubleClick: handleDoubleClick(itemId)
-    }, name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: isCompleted ? 'itemName completed' : 'itemName'
+    }, name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "deleteButton"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "button",
       id: "item".concat(order, "Delete"),
       onClick: handleDelete(itemId),
@@ -793,9 +812,9 @@ var Item = function Item(props) {
       htmlFor: "item".concat(order, "Delete"),
       className: "fas fa-times",
       style: {
-        display: deletable ? 'inline-block' : 'none'
+        display: deletable ? 'inline' : 'none'
       }
-    }));
+    })));
   }(changeable));
 };
 

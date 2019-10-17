@@ -284,11 +284,17 @@ class ItemList extends Component {
             );
           })}
         </ul>
-        <Footer
-          handleClick={this.handleFooterClick}
-          left={activeCount}
-          isClearable={itemCount && itemCount - activeCount}
-        />
+        {(isFooterShowing => {
+          if (isFooterShowing) {
+            return (
+              <Footer
+                handleClick={this.handleFooterClick}
+                left={activeCount}
+                isClearable={itemCount && itemCount - activeCount}
+              />
+            );
+          }
+        })(itemCount)}
       </div>
     );
   }

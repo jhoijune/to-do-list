@@ -20,45 +20,56 @@ const Item = props => {
   } = props;
   return (
     <li>
-      <input
-        type="checkbox"
-        id={`item${order}State`}
-        onClick={handleStateChange(itemId)}
-        style={{ display: 'none' }}
-      />
-      <label
-        htmlFor={`item${order}State`}
-        className={`far ${isCompleted ? 'fa-check-circle' : 'fa-circle'}`}
-      />
+      <div className="middleLeft">
+        <input
+          type="checkbox"
+          id={`item${order}State`}
+          onClick={handleStateChange(itemId)}
+          style={{ display: 'none' }}
+        />
+        <label
+          htmlFor={`item${order}State`}
+          className={`far ${isCompleted ? 'fa-check-circle' : 'fa-circle'}`}
+        />
+      </div>
       {(isInputable => {
         if (isInputable) {
           return (
-            <input
-              type="text"
-              value={name}
-              onChange={handleChange(itemId)}
-              onBlur={handleOnBlur(itemId)}
-              onKeyPress={handleEnter(itemId)}
-            />
+            <div className="middleRight">
+              <input
+                type="text"
+                value={name}
+                onChange={handleChange(itemId)}
+                onBlur={handleOnBlur(itemId)}
+                onKeyPress={handleEnter(itemId)}
+                autoFocus
+              />
+            </div>
           );
         }
         return (
           <div
+            className="middleRight"
             onMouseOver={handleMouseOver(itemId)}
             onMouseOut={handleMouseOut}
+            onDoubleClick={handleDoubleClick(itemId)}
           >
-            <p onDoubleClick={handleDoubleClick(itemId)}>{name}</p>
-            <button
-              type="button"
-              id={`item${order}Delete`}
-              onClick={handleDelete(itemId)}
-              style={{ display: 'none' }}
-            />
-            <label
-              htmlFor={`item${order}Delete`}
-              className="fas fa-times"
-              style={{ display: deletable ? 'inline-block' : 'none' }}
-            />
+            <span className={isCompleted ? 'itemName completed' : 'itemName'}>
+              {name}
+            </span>
+            <span className="deleteButton">
+              <button
+                type="button"
+                id={`item${order}Delete`}
+                onClick={handleDelete(itemId)}
+                style={{ display: 'none' }}
+              />
+              <label
+                htmlFor={`item${order}Delete`}
+                className="fas fa-times"
+                style={{ display: deletable ? 'inline' : 'none' }}
+              />
+            </span>
           </div>
         );
       })(changeable)}
