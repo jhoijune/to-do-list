@@ -1,0 +1,99 @@
+li.Item {
+  border-bottom: 1px solid #ededed;
+  display: flex;
+}
+
+li.Item .stateChange {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+li.Item .stateChange input {
+  display: none;
+}
+
+li.Item .stateChange label {
+  font-size: 6vw;
+  transition: color 0.5s;
+  color: var(--text-blur-color);
+  color: #e6e6e6;
+}
+
+li.Item .stateChange label.fa-check-circle {
+  color: #67c6b4;
+}
+
+li.Item .itemChange {
+  margin: 2vw 0;
+  width: auto;
+  flex: 8;
+}
+
+li.Item .itemChange .itemName {
+  font-size: 4vw;
+  margin: 2vw 0;
+  transition: color 0.5s, text-decoration 0.5s;
+  cursor: default;
+}
+
+li.Item .itemChange .itemName.completed {
+  text-decoration: line-through;
+  color: var(--text-blur-color);
+  color: #e6e6e6;
+}
+
+li.Item .itemChange input {
+  border: none;
+  width: 100%;
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  font-size: 4vw;
+}
+
+li.Item .itemChange input:focus {
+  outline: none;
+}
+
+li.Item .deleteButton {
+  margin-right: 2vw;
+  float: right;
+}
+
+li.Item .deleteButton label {
+  font-size: 4vw;
+  color: #cc9a9a;
+  transition: color 0.5s;
+  vertical-align: -webkit-baseline-middle;
+}
+
+li.Item .deleteButton label:hover {
+  color: #b7605e;
+}
+
+@media (min-width: 550px) {
+  li.Item .stateChange label {
+    font-size: 33px;
+  }
+
+  li.Item .itemChange {
+    margin: 11px 0;
+  }
+
+  li.Item .itemChange .itemName {
+    font-size: 22px;
+    margin: 11px 0;
+  }
+
+  li.Item .itemChange input {
+    font-size: 22px;
+  }
+
+  li.Item .deleteButton {
+    margin-right: 11px;
+  }
+
+  li.Item .deleteButton label {
+    font-size: 22px;
+  }
+}

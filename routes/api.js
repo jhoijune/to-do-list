@@ -110,6 +110,9 @@ router.post('/active', async (req, res) => {
   "delete_flag": 0
 }
     */
+    if (req.body.name.length > 200) {
+      return res.status(413).send();
+    }
     const creationInfo = await Item.create({
       name: req.body.name,
       complete_flag: false,
@@ -130,7 +133,7 @@ router.post('/active', async (req, res) => {
         id: creationInfo.id,
       },
     });
-    res.send(result);
+    res.status(201).send(result);
   } catch (err) {
     console.error(err);
   }
@@ -148,7 +151,7 @@ router.put('/active/all', async (req, res) => {
         where: { complete_flag: 0 },
       },
     );
-    res.status(201).send();
+    res.status(204).send();
   } catch (err) {
     console.error(err);
   }
@@ -170,6 +173,9 @@ router.put('/active/:itemId', async (req, res) => {
 }
   */
     if (req.body.name) {
+      if (req.body.name.length > 200) {
+        return res.status(413).send();
+      }
       await Item.update(
         {
           name: req.body.name,
@@ -221,7 +227,7 @@ router.put('/completed/all', async (req, res) => {
         where: { complete_flag: 1 },
       },
     );
-    res.status(201).send();
+    res.status(204).send();
   } catch (err) {
     console.error(err);
   }
@@ -243,6 +249,9 @@ router.put('/completed/:itemId', async (req, res) => {
 }
     */
     if (req.body.name) {
+      if (req.body.name.length > 200) {
+        return res.status(413).send();
+      }
       await Item.update(
         {
           name: req.body.name,
@@ -334,23 +343,7 @@ router.delete('/completed/all', async (req, res) => {
         where: { complete_flag: 1 },
       },
     );
-    /*
-    const result = await Item.findAll({
-      attributes: [
-        ['id', 'itemId'],
-        'name',
-        ['complete_flag', 'completeFlag'],
-        ['create_date', 'createDate'],
-        ['modify_date', 'modifyDate'],
-        ['delete_flag', 'deleteFlag'],
-      ],
-      where: {
-        id: req.params.itemId,
-      },
-    });
-    res.send(result);
-    */
-    res.status(201).send();
+    res.status(204).send();
   } catch (err) {
     console.error(err);
   }

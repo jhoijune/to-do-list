@@ -4,10 +4,11 @@
   "description": "react로 제작한 to do list입니다",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack -w",
-    "start": "node -r esm app.js",
-    "dev": "nodemon app.js --exec babel-node --presets @babel/preset-env"
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "start": "node -r esm server.js",
+    "dev": "nodemon server.js --exec babel-node --presets @babel/preset-env",
+    "hook": "webpack --config webpack.hook.config.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,8 @@
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
     "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.3.0",
@@ -41,17 +44,16 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "esm": "^3.2.25",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "nodemon": "^1.19.3",
     "prettier": "^1.18.2",
-    "react-hot-loader": "^4.12.14",
-    "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
-    "history": "^4.10.1",
     "morgan": "^1.9.1",
     "mysql2": "^1.7.0",
     "prop-types": "^15.7.2",
@@ -59,6 +61,7 @@
     "react-dom": "^16.10.1",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "sequelize": "^5.19.1"
+    "sequelize": "^5.19.1",
+    "webpack": "^4.41.0"
   }
 }

@@ -1,0 +1,18 @@
+header h1 {
+  font-family: 'Pacifico';
+  text-align: center;
+  color: #ebd6c7;
+  font-size: 16vw;
+  font-weight: 500;
+}
+
+@media (min-width: 550px) {
+  header .container {
+    width: var(--breakpoint-width);
+    margin: 0 auto;
+  }
+
+  header h1 {
+    font-size: 88px;
+  }
+}

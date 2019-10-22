@@ -1,0 +1,17 @@
+.ItemList .container {
+  background-color: var(--white-color);
+  background-color: #fff;
+}
+
+.ItemList ul {
+  width: auto;
+  border-left: 1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
+}
+
+@media (min-width: 550px) {
+  .ItemList .container {
+    width: var(--breakpoint-width);
+    margin: 0 auto;
+  }
+}

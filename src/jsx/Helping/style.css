@@ -1,0 +1,72 @@
+.Helping {
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #e6e6e6;
+  border-top: none;
+  color: var(--text-grey-color);
+  color: #777;
+}
+
+.Helping p {
+  display: flex;
+  align-items: center;
+  padding: 2vw;
+  flex: 1;
+  font-size: 2.5vw;
+}
+
+.Helping nav {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.Helping nav ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-style: none;
+}
+
+.Helping nav ul a {
+  display: block;
+  text-decoration: none;
+  color: #777;
+  padding: 0 2vw;
+  font-size: 2.5vw;
+}
+
+.Helping nav ul a.active {
+  border: 1px solid;
+  border-radius: 4px;
+}
+
+.Helping .removeComplete {
+  flex: 1;
+}
+
+.Helping .removeComplete button {
+  all: unset;
+  color: #777;
+  margin: 0;
+  padding: 2vw;
+  font-size: 2.5vw;
+}
+
+@media (min-width: 550px) {
+  .Helping p {
+    padding: 11px;
+    font-size: 13.75px;
+  }
+
+  .Helping nav ul a {
+    padding: 0 11px;
+    font-size: 13.75px;
+  }
+
+  .Helping .removeComplete button {
+    padding: 11px;
+    font-size: 13.75px;
+  }
+}
