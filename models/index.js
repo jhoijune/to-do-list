@@ -1,16 +1,16 @@
-import Sequelize from 'sequelize';
-import item from './item';
+const Sequelize = require('sequelize');
+const item = require('./item');
 
 const env = process.env.NODE_ENV || 'development';
-const config = require('../config/config.json')[env];
+const config = require('../config/config')[env];
 
 const sequelize = new Sequelize(
   config.database,
   config.username,
   config.password,
-  config,
+  config
 );
 
 const Item = item(sequelize, Sequelize);
 
-export { sequelize, Sequelize, Item };
+module.exports = { sequelize, Sequelize, Item };

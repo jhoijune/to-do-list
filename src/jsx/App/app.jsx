@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router';
@@ -16,5 +17,5 @@ ReactDOM.render(
     </Switch>
     <Footer />
   </BrowserRouter>,
-  document.getElementById('content'),
+  document.getElementById('content')
 );

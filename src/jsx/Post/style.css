@@ -26,7 +26,7 @@
 
 .Post .postToDo input {
   border: none;
-  width: 100%;
+  width: 99%;
   margin: 2.35vw 0;
   font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
   font-size: 4vw;
@@ -49,7 +49,7 @@
 
   .Post .postToDo input {
     border: none;
-    width: 100%;
+    width: 99%;
     margin: 13px 0;
     font-size: 22px;
   }

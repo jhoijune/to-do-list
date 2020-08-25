@@ -10,14 +10,6 @@ module.exports = {
     filename: '[name].[contenthash].js',
     publicPath: '/',
   },
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: './public',
-  },
-  stats: {
-    colors: true,
-    reasons: true,
-  },
   module: {
     rules: [
       {
@@ -31,7 +23,6 @@ module.exports = {
       },
     ],
   },
-  mode: 'development',
   resolve: {
     extensions: ['.js', '.jsx'],
   },

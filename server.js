@@ -1,10 +1,10 @@
-import express from 'express';
-import logger from 'morgan';
-import path from 'path';
-import { config } from 'dotenv';
+const express = require('express');
+const logger = require('morgan');
+const path = require('path');
+const { config } = require('dotenv');
 
-import apiRouter from './routes/api';
-import { sequelize } from './models';
+const apiRouter = require('./routes/api');
+const { sequelize } = require('./models');
 
 config();
 

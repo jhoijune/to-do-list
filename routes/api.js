@@ -1,7 +1,7 @@
-import { Router as expressRouter } from 'express';
-import { Item, sequelize } from '../models';
+const { Router } = require('express');
+const { Item, sequelize } = require('../models');
 
-const router = expressRouter();
+const router = Router();
 
 router.get('/all', async (req, res) => {
   try {
@@ -390,4 +390,4 @@ router.delete('/completed/:itemId', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

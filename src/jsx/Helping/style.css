@@ -48,6 +48,7 @@
 
 .Helping .removeComplete button {
   all: unset;
+  cursor: pointer;
   color: #777;
   margin: 0;
   padding: 2vw;
